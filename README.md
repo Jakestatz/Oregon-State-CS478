@@ -1,18 +1,18 @@
 # Oregon-State-CS78
 
-##Project A: TCP Attacks
+## Project A: TCP Attacks
 TCP (Transmission Control Protocol) is the main transport layer protocol of the network protocol suite. In the original TCP designs, the focus was mostly on providing reliable and in-order, end-to-end delivery, but not on the security aspects. The aim of this project is to exploit TCP vulnerabilities to launch and demonstrate attacks on TCP. TCP has been studied extensively in ECE/CS 372, and if you need a refresher and/or are not familiar with it, you should do so before proceeding with the project. Lots of resources are available online and on textbooks, including 372 materials, explaining how TCP works. Below we provide some basic information, mostly focusing on the description of the attacks on TCP, to get you started on the project. Further study and research are required from your side.
 
-###1. TCP's three-way handshake
+### TCP's three-way handshake
 Before a TCP connection is established, a three-handshake message exchange between the two entities is required, which is a set of three messages exchanged between the client and the server: (i) client sends a SYN message to the Server, indicating desire for establishing a TCP session; (ii) Server replies with a SNY-ACK message acknowledging/approving the session establishment, and (iii) the client replying back with an ACK message.
 
-###2. Attacks in the project
+### Attacks in the project
 
-####TCP SYN Flooding Attack: 
+#### TCP SYN Flooding Attack: 
 An attacker sends many TCP SYN messages to a victim machine (e.g., webserver listening on port 80) but with no intention to reply with ACKS to the server's SYNACKs. For this, the attacker could use spoofed IP addresses. By intentionally not replying to all these SYNACK, the attacker forces the server to keep many connections half-opened, each of which requires the server to store some (connection) information (e.g., initial sequence numbers, max segment size, receiver buffer size, etc.). This will make the server's buffer full, resulting in rejecting any legitimate requests for connections. For this attack, you may need to turn off SYN Cookie, a countermeasure technique for addressing TCP SYN flooding.
 
-####TCP RST Attack: 
+#### TCP RST Attack: 
 In normal situations, when a machine receives an unexpected TCP segment (e.g., receives a TCP SYN message requesting to establish a TCP connection to a port that the machine is not accepting connections on), the receiving machine sends back a special segment, called TCP RST (reset) message, to the sender instructing it to stop sending. This is a control segment with no payload and with the RST bit set. A TCP RST attack exploits this mechanism to fool two victim machines, with an active TCP connection between them, into closing the connection, thereby stopping the data transfer between the machines. The attacker does so by crafting and sending one (or both) of the victim machines a fake TCP RST segment, instructing the closure of the TCP connection. For this attack to succeed, the sequence number of the spoofed TCP RST segment must be carefully chosen, so that it matches the receiver's (i.e., victim's) expected sequence number (or fall within the receiver's sliding window in some implementation). You need to demonstrate the success of the attack by establishing some connection (e.g., Telnet or SSH session) and then terminating the session through spoofed RST segments. A nice introduction to this attack (as well as related TCP operations/features), given by Robert Heaton, can be found here.
 
-####TCP Session Hijacking: 
+#### TCP Session Hijacking: 
 An attacker can hijack an existing TCP connection by taking over the connection and injecting its own traffic. For example, the attacker can fool the server of ongoing Telnet connection between a client and a server to run some commands of its own choice. Recall that a TCP connection/session is uniquely identified by the 4-tuple: source IP address, source port number, destination IP address, and destination port number. Therefore, an attacker can spoof a TCP segment with the 4-tuple matching that of an existing TCP session and send it to the receiver. The receiver will have no way to tell whether this segment is coming from the legitimate sender or from an attacker. For this, the attacker will have to sniff at an existing TCP session to obtain its 4-tuple elements as well as the receiver's expected sequence number, and use them to craft a valid TCP segment of its own. Note here that if the sequence number is not set to the right one (i.e., the one expected by the receiver), the receiver may discard the spoofed segment.
