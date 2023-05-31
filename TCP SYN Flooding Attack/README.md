@@ -19,10 +19,10 @@
 <img width="100%" src="Images/Step4_1.png">&emsp;
 ### 5. Create NetCat Listener on Server Container
     nc -l 80 -v (Run from server)
-<img width="100%" src="Images/Step5.png">&emsp;
+<img width="100%" src="Images/Step7.png">&emsp;
 ### 6. Launch Attack From Attacker Container
     Python3 SYN_Flood.py
 <img width="100%" src="Images/Step6.png">&emsp;
 ### 7. Connect Client to Server
     telnet 10.2.5.3 80 (Run from client)
-<img width="100%" src="Images/Step7.png">&emsp;
+<img width="100%" src="Images/Step5.png">&emsp;
