@@ -2,7 +2,7 @@
 
 ### 1. Create NetOne Network
     docker network create --subnet 10.2.5.0/24 NetOne --driver bridge
-<img width="40%" src="TCP SYN Flooding Attack/Images/Step1.png">&emsp;
+<img width="40%" src="/Images/Step1.png">&emsp;
 ### 2. Launch Server Container in Privileged Mode
     docker run -it --privileged --network NetOne --name Server --ip 10.2.5.3 ubuntu:latest 
 <img width="40%" src="TCP SYN Flooding Attack/images/Step2.png">&emsp;
